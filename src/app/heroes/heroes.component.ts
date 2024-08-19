@@ -7,7 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { HeroDetailComponent } from '../hero-detail/hero-detail.component';
 
 import { HeroService } from '../hero.service';
-import { MessageService } from '../message.service';
+
 @Component({
   selector: 'app-heroes',
   standalone: true,
