@@ -10,7 +10,7 @@ import { catchError, map, tap } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class HeroService {
-  private heroesUrl = 'api/heroes'; // URL to web api
+  private heroesUrl = 'http://localhost:8080/api/heroes'; // URL to web api
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -29,16 +29,17 @@ export class HeroService {
     );
   }
 
-  /** GET heroes from the server */
+  /** GET heroes from the server */  
   getHeroes(): Observable<Hero[]> {
     return this.http.get<Hero[]>(this.heroesUrl).pipe(
       tap((_) => this.log('fetched heroes')),
       catchError(this.handleError<Hero[]>('getHeroes', []))
     );
   }
+  
 
   /** GET hero by id. Will 404 if id not found */
-  getHero(id: number): Observable<Hero> {
+  getHero(id: string): Observable<Hero> {
     const url = `${this.heroesUrl}/${id}`;
     return this.http.get<Hero>(url).pipe(
       tap((_) => this.log(`fetched hero id=${id}`)),
@@ -60,7 +61,7 @@ export class HeroService {
   }
 
   /** DELETE: delete the hero from the server */
-  deleteHero(id: number): Observable<Hero> {
+  deleteHero(id: string): Observable<Hero> {
     const url = `${this.heroesUrl}/${id}`;
 
     return this.http.delete<Hero>(url, this.httpOptions).pipe(
